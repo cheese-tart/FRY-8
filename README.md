@@ -1,3 +1,3 @@
 # CHIP-8 Emulator
 
-Title says it all
+Title says it all.
