@@ -18,6 +18,10 @@ class Chip8 {
         uint32_t video[VIDEO_WIDTH * VIDEO_HEIGHT]{};
 
     private:
+        void Table0();
+        void Table8();
+        void TableE();
+        void TableF();
 
         // Do nothing
 	    void OP_NULL();
@@ -91,6 +95,39 @@ class Chip8 {
         // DRW Vx, Vy, nibble
         void OP_Dxyn();
 
+        // SKP Vx
+        void OP_Ex9E();
+
+        // SKNP Vx
+        void OP_ExA1();
+
+        // LD Vx, DT
+        void OP_Fx07();
+
+        // LD Vx, K
+        void OP_Fx0A();
+
+        // LD DT, Vx
+        void OP_Fx15();
+
+        // LD ST, Vx
+        void OP_Fx18();
+
+        // ADD I, Vx
+        void OP_Fx1E();
+
+        // LD F, Vx
+        void OP_Fx29();
+
+        // LD B, Vx
+        void OP_Fx33();
+
+        // LD [I], Vx
+        void OP_Fx55();
+
+        // LD Vx, [I]
+        void OP_Fx65();
+
         uint8_t registers[REGISTER_COUNT]{};
         uint8_t memory[MEMORY_SIZE]{};
         uint16_t index{};
@@ -103,4 +140,11 @@ class Chip8 {
 
         std::default_random_engine randGen;
 	    std::uniform_int_distribution<uint8_t> randByte;
+
+        typedef void (Chip8::*Chip8Func)();
+	    Chip8Func table[0xF + 1];
+	    Chip8Func table0[0xE + 1];
+	    Chip8Func table8[0xE + 1];
+	    Chip8Func tableE[0xE + 1];
+	    Chip8Func tableF[0x65 + 1];
 };
